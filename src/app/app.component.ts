@@ -20,9 +20,10 @@ export class AppComponent implements OnInit{
         alert("login success")
         console.log(user);
         this.apiCall.loginWithGoogle(user).subscribe({
-          next:(data)=>{
+          next:(data:any)=>{
             console.log("Data from backend");
             console.log(data);
+            this.token=data['jwtToken'];
           },
           error:(error)=>{
             console.log("Error from backend");
@@ -40,5 +41,35 @@ export class AppComponent implements OnInit{
       }
     })
   }
+
+  // get users
+  getUsers(){
+    this.apiCall.getUsers(this.token).subscribe({
+      next:(data:any)=>{
+        console.log("Data from backend");
+        console.log(data);
+      },
+      error:(error)=>{
+        console.log(error);
+        
+      }
+    })
+  }
+
+  // get products
+  getProducts(){
+    this.apiCall.getAllProducts(this.token).subscribe({
+      next:(data:any)=>{
+        console.log("Data from backend");
+        console.log(data);
+      },
+      error:(error)=>{
+        console.log(error);
+        
+      }
+    })
+  }
+
   title = 'shubham_hardware_google_login';
+  token = '';
 }
